@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <vector>
 using namespace std;
 
 struct Node{
@@ -12,15 +13,35 @@ struct Node{
 class Movie{
 private:
     string title;
-    Node *list;
-
+    Node *head;
 public:
-
+    Movie()                    {head = nullptr;}
+    string getTitle()          {return title;}
+    void setTitle(string t)    {title = t;}
+    Node* getList()             {return head;}
 };
 
 void addNode(Node *&, Node *&);
 
 int main(){
+    vector<Movie> movies;
+    fstream fin;
+    fin.open("reviews.txt");
+    //populating vector
+    if (fin.good()){
+        for (int i = 0; i < 4; i++){
+            Movie temp;
+            temp.setTitle("Movie #" + to_string(i));
+            Node *temphead = temp.getList();
+            
+
+
+        }
+    }
+    else{
+        cout << "error opening file.";
+    }
+    fin.close();
     return 0;
 }
 
@@ -29,7 +50,7 @@ void addNode(Node *&hd, Node *&curr){
         hd = curr;
     }
     else{
-        Node *temp = hd;
-        curr -> next = hd -> next;
+        curr -> next = hd;
+        hd = curr;
     }
 }
