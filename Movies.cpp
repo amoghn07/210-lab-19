@@ -43,7 +43,7 @@ int main(){
                 string com;
                 Node *tempNode = new Node;
                 //generating random rating between 1.0 and 5.0, source: geeks4geeks
-                tempNode -> rating = lower_bd + (upper_bound - lower_bd) * (rand() % max_rand) / max_rand;
+                tempNode -> rating = lower_bd + (upper_bound - lower_bd) * (random() % max_rand) / max_rand;
                 tempNode -> next = nullptr;
                 getline(fin, com);
                 tempNode -> comments = com;
@@ -80,7 +80,7 @@ void output(Node *head){
     Node *temp = head;
     int count;
     float revTotal;
-    cout << "Outputting Reviews:\n";
+    cout << "\t> Outputting Reviews:\n";
     while (temp){
         count++;
         cout << "\t> Review #" << count << ": " << temp -> rating;
@@ -88,5 +88,5 @@ void output(Node *head){
         revTotal += temp -> rating;
         temp = temp -> next;
     }
-    cout << "\t> Average: " << revTotal / count;
+    cout << "\t> Average: " << revTotal / count << endl;
 }
