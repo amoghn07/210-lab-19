@@ -2,11 +2,13 @@
 #include <string>
 #include <fstream>
 #include <vector>
+#include <cstdlib>
+#include <ctime>
+#include <iomanip>
 using namespace std;
 
 const double lower_bd = 1.0;
 const double upper_bound = 5.0;
-const long max_rand = 1000000L;
 
 struct Node{
     double rating;
@@ -30,6 +32,8 @@ void output(Node *);
 void addNode(Node *&, Node *&);
 
 int main(){
+    srand(time(nullptr));
+
     vector<Movie> movies;
     fstream fin;
     fin.open("reviews.txt");
@@ -43,7 +47,10 @@ int main(){
                 string com;
                 Node *tempNode = new Node;
                 //generating random rating between 1.0 and 5.0, source: geeks4geeks
-                tempNode -> rating = lower_bd + (upper_bound - lower_bd) * (random() % max_rand) / max_rand;
+                tempNode -> rating = lower_bd 
+                + (upper_bound - lower_bd)
+                * (static_cast<double>(rand()) / RAND_MAX);
+                
                 tempNode -> next = nullptr;
                 getline(fin, com);
                 tempNode -> comments = com;
@@ -78,15 +85,17 @@ void addNode(Node *&hd, Node *&curr){
 
 void output(Node *head){
     Node *temp = head;
-    int count;
-    float revTotal;
+    int count = 0;
+    double revTotal = 0;
     cout << "\t> Outputting Reviews:\n";
     while (temp){
         count++;
-        cout << "\t> Review #" << count << ": " << temp -> rating;
+        cout << "\t> Review #" << count << ": " << fixed << setprecision(1) << temp -> rating;
         cout << ": " << temp -> comments << endl;
         revTotal += temp -> rating;
         temp = temp -> next;
     }
-    cout << "\t> Average: " << revTotal / count << endl;
+    if (count > 0){
+        cout << "\t> Average: " << fixed << setprecision(1) << (revTotal / count) << endl;
+    }
 }
