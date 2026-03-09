@@ -33,9 +33,16 @@ int main(){
             Movie temp;
             temp.setTitle("Movie #" + to_string(i));
             Node *temphead = temp.getList();
-            
-
-
+            for (int j = 0; j < 4; j++){
+                string com;
+                Node *tempNode = new Node;
+                //generating random rating between 1.0 and 5.0
+                tempNode -> rating = rand() % 5 + 1.0;
+                tempNode -> next = nullptr;
+                getline(fin, com);
+                tempNode -> comments = com;
+                addNode(temphead, tempNode);
+            }
         }
     }
     else{
